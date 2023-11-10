@@ -1,6 +1,8 @@
 let express = require('express');
 let app = express();
 
+let morgan = require('morgan');
+
 let topMovies = [
     {
         title: 'Creed',
@@ -44,12 +46,15 @@ let topMovies = [
     },
 ];
 
-app.get('/top-movies', (req, res) => {
+app.use(morgan('common'));
+app.use(express.static('public'));
+
+app.get('/movies', (req, res) => {
     res.json(topMovies)
 });
 
 app.get('/', (req, res) => {
-    res.sendFile(documentation.html)
+    res.sendFile(__dirname + '/documentation.html')
 });
 
 app.listen(8080, () => {
