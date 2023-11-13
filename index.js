@@ -8,7 +8,7 @@ let movies = [
     {
         title: 'Creed',
         actor: 'Michael B. Jordan',
-        genre: 'Action',
+        genre: 'action',
         director: {
             name: 'Ryan Coogler',
             bio: 'American Filmmaker known for moives like Black Panther and Fruitvale Station',
@@ -18,7 +18,7 @@ let movies = [
     {
         title: 'Gran Turismo',
         actor: 'Archih Madekwe',
-        genre: 'Action',
+        genre: 'action',
         director: {
             name: '',
             bio: '',
@@ -28,7 +28,7 @@ let movies = [
     {
         title: 'Fast and Furious',
         actor: 'Paul Walker',
-        genre: 'Action',
+        genre: 'action',
         director: {
             name: '',
             bio: '',
@@ -38,7 +38,7 @@ let movies = [
     {
         title: 'Iron Man',
         actor: 'Robert Downy Jr',
-        genre: 'Action',
+        genre: 'action',
         director: {
             name: '',
             bio: '',
@@ -48,7 +48,7 @@ let movies = [
     {
         title: 'Coach Carter',
         actor: 'Samuel Jackson',
-        genre: 'Action',
+        genre: 'drama',
         director: {
             name: '',
             bio: '',
@@ -58,7 +58,7 @@ let movies = [
     {
         title: 'Thor Ragnarok',
         actor: 'Chris Hemsworth',
-        genre: 'Action',
+        genre: 'action',
         director: {
             name: '',
             bio: '',
@@ -68,7 +68,7 @@ let movies = [
     {
         title: 'Rush Hour',
         actor: 'Jackie Chan',
-        genre: 'Action',
+        genre: 'comedy',
         director: {
             name: '',
             bio: '',
@@ -78,7 +78,7 @@ let movies = [
     {
         title: 'Training Day',
         actor: 'Denzel Washington',
-        genre: 'Action',
+        genre: 'drama',
         director: {
             name: '',
             bio: '',
@@ -88,7 +88,7 @@ let movies = [
     {
         title: 'Hitch',
         actor: 'Will Smith',
-        genre: 'Action',
+        genre: 'comedy',
         director: {
             name: '',
             bio: '',
@@ -98,7 +98,7 @@ let movies = [
     {
         title: 'Hunger Games',
         actor: 'Jennifer Lawrence',
-        genre: 'Action',
+        genre: 'action',
         director: {
             name: '',
             bio: '',
@@ -139,7 +139,7 @@ app.get('/movies/:movieTitle', (req, res) => {
 });
 
 app.get('/movies/genres/:genreName', (req, res) => {
-    res.json(movies.find((movie) => {return movie.genre === req.params.genreName}));
+    res.json(movies.filter((movie) => {return movie.genre === req.params.genreName}));
 });
 
 app.get('/movies/directors/:directorName', (req, res) => {
