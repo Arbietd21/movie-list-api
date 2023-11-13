@@ -146,7 +146,25 @@ app.get('/movies/directors/:directorName', (req, res) => {
     res.json(movies.find((movie) => {return movie.director.name === req.params.directorName}));
 });
 
-app.post('/users')
+app.post('/users', (req, res) => {
+    res.send('Successful POST request, adding a new user to the database');
+});
+
+app.put('/users/username', (req, res) => {
+    res.send('Username was successfully updated');
+});
+
+app.put('/users/username/favorites', (req, res) => {
+    res.send('A movie was successfully added to your favorites');
+});
+
+app.delete('/users/username/favorites', (req, res) => {
+    res.send('A movie was successfully deleted from your favorites');
+});
+
+app.delete('/users', (req, res) => {
+    res.send('You were successfully deregistered from our database')
+})
 
 app.listen(8080, () => {
     console.log(`Your app is listening on port 8080`)
