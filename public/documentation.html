@@ -34,10 +34,10 @@
         </tr>
         <tr>
             <td>Return data about a genre by name.</td><!--Logic-->
-            <td>/movies/genres/[genre name]</td><!--URL-->
+            <td>/movies/[genre name]</td><!--URL-->
             <td>GET</td><!--Method-->
             <td>none</td><!--Body-->
-            <td>A list of movies belonging to the corresponding data.</td><!--Response-->
+            <td>A list of movies belonging to the corresponding genre.</td><!--Response-->
         </tr>
         <tr>
             <td>Return data about a director by name.</td><!--Logic-->
@@ -55,31 +55,31 @@
         </tr>
         <tr>
             <td>Allow users to update their user info(username).</td><!--Logic-->
-            <td>/users</td><!--URL-->
+            <td>/users/[username]</td><!--URL-->
             <td>PUT</td><!--Method-->
-            <td></td><!--Body-->
-            <td>A JSON with a list of movies</td><!--Response-->
+            <td>?</td><!--Body-->
+            <td>Text confirming the users username was successfully updated.</td><!--Response-->
         </tr>
         <tr>
             <td>Allow users to add a movie to their list of favorites.</td><!--Logic-->
-            <td>/movies</td><!--URL-->
-            <td>GET</td><!--Method-->
-            <td>none</td><!--Body-->
-            <td>A JSON with a list of movies</td><!--Response-->
+            <td>/users/[username]/favorites</td><!--URL-->
+            <td>PUT</td><!--Method-->
+            <td>?</td><!--Body-->
+            <td>Text confirming that a movie was successfully added to the users favorites list.</td><!--Response-->
         </tr>
         <tr>
             <td>Allow users to remove a movie from their list of favorites.</td><!--Logic-->
-            <td>/movies</td><!--URL-->
-            <td>GET</td><!--Method-->
+            <td>/users/[username]/favorites/[movie title]</td><!--URL-->
+            <td>DELETE</td><!--Method-->
             <td>none</td><!--Body-->
-            <td>A JSON with a list of movies</td><!--Response-->
+            <td>Text confirming that a movie was successfully deleted from the users favorites list.</td><!--Response-->
         </tr>
         <tr>
             <td>Allow an existing user to deregister.</td><!--Logic-->
-            <td>/movies</td><!--URL-->
-            <td>GET</td><!--Method-->
+            <td>/users</td><!--URL-->
+            <td>DELETE</td><!--Method-->
             <td>none</td><!--Body-->
-            <td>A JSON with a list of movies</td><!--Response-->
+            <td>Text confirming a user was successfully deregistered</td><!--Response-->
         </tr>
     </table>
 </body>
