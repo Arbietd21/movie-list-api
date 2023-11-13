@@ -57,19 +57,19 @@
             <td>Allow users to update their user info(username).</td><!--Logic-->
             <td>/users/[username]</td><!--URL-->
             <td>PUT</td><!--Method-->
-            <td>?</td><!--Body-->
+            <td>none</td><!--Body-->
             <td>Text confirming the users username was successfully updated.</td><!--Response-->
         </tr>
         <tr>
             <td>Allow users to add a movie to their list of favorites.</td><!--Logic-->
             <td>/users/[username]/favorites</td><!--URL-->
             <td>PUT</td><!--Method-->
-            <td>?</td><!--Body-->
+            <td>none</td><!--Body-->
             <td>Text confirming that a movie was successfully added to the users favorites list.</td><!--Response-->
         </tr>
         <tr>
             <td>Allow users to remove a movie from their list of favorites.</td><!--Logic-->
-            <td>/users/[username]/favorites/[movie title]</td><!--URL-->
+            <td>/users/[username]/favorites</td><!--URL-->
             <td>DELETE</td><!--Method-->
             <td>none</td><!--Body-->
             <td>Text confirming that a movie was successfully deleted from the users favorites list.</td><!--Response-->
