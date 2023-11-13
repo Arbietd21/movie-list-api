@@ -134,6 +134,10 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/documentation.html')
 });
 
+app.get('/movies/:movieTitle', (req, res) => {
+    res.json(movies.find((movie) => {return movie.title === req.params.movieTitle}));
+});
+
 app.listen(8080, () => {
     console.log(`Your app is listening on port 8080`)
 });
