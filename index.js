@@ -10,9 +10,9 @@ let movies = [
         actor: 'Michael B. Jordan',
         genre: 'Action',
         director: {
-            name: '',
-            bio: '',
-            birthYear: '',
+            name: 'Ryan Coogler',
+            bio: 'American Filmmaker known for moives like Black Panther and Fruitvale Station',
+            birthYear: '1986',
         }
     },
     {
@@ -136,6 +136,14 @@ app.get('/', (req, res) => {
 
 app.get('/movies/:movieTitle', (req, res) => {
     res.json(movies.find((movie) => {return movie.title === req.params.movieTitle}));
+});
+
+app.get('/movies/genres/:genreName', (req, res) => {
+    res.json(movies.find((movie) => {return movie.genre === req.params.genreName}));
+});
+
+app.get('/movies/directors/:directorName', (req, res) => {
+    res.json(movies.find((movie) => {return movie.director.name === req.params.directorName}));
 });
 
 app.listen(8080, () => {
