@@ -146,6 +146,8 @@ app.get('/movies/directors/:directorName', (req, res) => {
     res.json(movies.find((movie) => {return movie.director.name === req.params.directorName}));
 });
 
+app.post('/users')
+
 app.listen(8080, () => {
     console.log(`Your app is listening on port 8080`)
 });
