@@ -150,8 +150,14 @@ app.post('/users', (req, res) => {
     res.send('Successful POST request, adding a new user to the database');
 });
 
-app.put('/users/username', (req, res) => {
-    res.send('Username was successfully updated');
+app.put('/users/:username', (req, res) => {
+    let foundUser = users.find((user) => {return user.name === req.params.username});
+
+    if (foundUser) {
+      res.send('Username was successfully updated');  
+    } else {
+        res.status(404).send('User not found.')
+    }
 });
 
 app.put('/users/username/favorites', (req, res) => {
