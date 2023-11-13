@@ -4,11 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <h1>URL Endpoints</h1>
 
+    <table>
+        <tr>
+            <th>Logic</th>
+            <th>URL</th>
+            <th>HTTP Method</th>
+            <th>Request Body</th>
+            <th>Response Body</th>
+        </tr>
 
+        <tr>
+            <td>Return a list of all movies.</td><!--Logic-->
+            <td>/movies</td><!--URL-->
+            <td>GET</td><!--Method-->
+            <td>none</td><!--Body-->
+            <td>A JSON with a list of movies</td><!--Response-->
+        </tr>
+        <tr>
+            <td>Return data about a single movie by title.</td><!--Logic-->
+            <td>/movies/[title]</td><!--URL-->
+            <td>GET</td><!--Method-->
+            <td>none</td><!--Body-->
+            <td>A JSON with a information about a specific movie</td><!--Response-->
+        </tr>
+        <tr>
+            <td>Return data about a genre by name.</td><!--Logic-->
+            <td>/movies/genres/[genre name]</td><!--URL-->
+            <td>GET</td><!--Method-->
+            <td>none</td><!--Body-->
+            <td>A list of movies belonging to the corresponding data.</td><!--Response-->
+        </tr>
+        <tr>
+            <td>Return data about a director by name.</td><!--Logic-->
+            <td>/movies/directors/[director name]</td><!--URL-->
+            <td>GET</td><!--Method-->
+            <td>none</td><!--Body-->
+            <td>A JSON with information about the correspoding director.</td><!--Response-->
+        </tr>
+        <tr>
+            <td>Allow new users to register.</td><!--Logic-->
+            <td>/users</td><!--URL-->
+            <td>POST</td><!--Method-->
+            <td>Information in a JSON format containting user information</td><!--Body-->
+            <td>Text confirming the user was successfully added.</td><!--Response-->
+        </tr>
+        <tr>
+            <td>Allow users to update their user info(username).</td><!--Logic-->
+            <td>/movies</td><!--URL-->
+            <td>GET</td><!--Method-->
+            <td>none</td><!--Body-->
+            <td>A JSON with a list of movies</td><!--Response-->
+        </tr>
+        <tr>
+            <td>Allow users to add a movie to their list of favorites.</td><!--Logic-->
+            <td>/movies</td><!--URL-->
+            <td>GET</td><!--Method-->
+            <td>none</td><!--Body-->
+            <td>A JSON with a list of movies</td><!--Response-->
+        </tr>
+        <tr>
+            <td>Allow users to remove a movie from their list of favorites.</td><!--Logic-->
+            <td>/movies</td><!--URL-->
+            <td>GET</td><!--Method-->
+            <td>none</td><!--Body-->
+            <td>A JSON with a list of movies</td><!--Response-->
+        </tr>
+        <tr>
+            <td>Allow an existing user to deregister.</td><!--Logic-->
+            <td>/movies</td><!--URL-->
+            <td>GET</td><!--Method-->
+            <td>none</td><!--Body-->
+            <td>A JSON with a list of movies</td><!--Response-->
+        </tr>
+    </table>
 </body>
 </html>
