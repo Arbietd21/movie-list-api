@@ -4,48 +4,115 @@ let morgan = require('morgan');
 let bodyParser = require('body-parser');
 let methodOverride = require('method-override');
 
-let topMovies = [
+let movies = [
     {
         title: 'Creed',
-        actor: 'Michael B. Jordan'
+        actor: 'Michael B. Jordan',
+        genre: 'Action',
+        director: {
+            name: '',
+            bio: '',
+            birthYear: '',
+        }
     },
     {
         title: 'Gran Turismo',
-        actor: 'Archih Madekwe'
+        actor: 'Archih Madekwe',
+        genre: 'Action',
+        director: {
+            name: '',
+            bio: '',
+            birthYear: '',
+        }
     },
     {
         title: 'Fast and Furious',
-        actor: 'Paul Walker'
+        actor: 'Paul Walker',
+        genre: 'Action',
+        director: {
+            name: '',
+            bio: '',
+            birthYear: '',
+        }
     },
     {
         title: 'Iron Man',
-        actor: 'Robert Downy Jr'
+        actor: 'Robert Downy Jr',
+        genre: 'Action',
+        director: {
+            name: '',
+            bio: '',
+            birthYear: '',
+        }
     },
     {
         title: 'Coach Carter',
-        actor: 'Samuel Jackson'
+        actor: 'Samuel Jackson',
+        genre: 'Action',
+        director: {
+            name: '',
+            bio: '',
+            birthYear: '',
+        }
     },
     {
         title: 'Thor Ragnarok',
-        actor: 'Chris Hemsworth'
+        actor: 'Chris Hemsworth',
+        genre: 'Action',
+        director: {
+            name: '',
+            bio: '',
+            birthYear: '',
+        }
     },
     {
         title: 'Rush Hour',
-        actor: 'Jackie Chan'
+        actor: 'Jackie Chan',
+        genre: 'Action',
+        director: {
+            name: '',
+            bio: '',
+            birthYear: '',
+        }
     },
     {
         title: 'Training Day',
-        actor: 'Denzel Washington'
+        actor: 'Denzel Washington',
+        genre: 'Action',
+        director: {
+            name: '',
+            bio: '',
+            birthYear: '',
+        }
     },
     {
         title: 'Hitch',
-        actor: 'Will Smith'
+        actor: 'Will Smith',
+        genre: 'Action',
+        director: {
+            name: '',
+            bio: '',
+            birthYear: '',
+        }
     },
     {
         title: 'Hunger Games',
-        actor: 'Jennifer Lawrence'
+        actor: 'Jennifer Lawrence',
+        genre: 'Action',
+        director: {
+            name: '',
+            bio: '',
+            birthYear: '',
+        }
     },
 ];
+
+let users = [
+    {
+        name: 'AJ',
+        favorites: ['creed', 'coach carter', 'fast and furious']
+    }
+]
 
 app.use(morgan('common'));
 app.use(express.static('public'));
@@ -60,7 +127,7 @@ app.use((err, req, res, next) => {
   });
 
 app.get('/movies', (req, res) => {
-    res.json(topMovies)
+    res.json(movies)
 });
 
 app.get('/', (req, res) => {
