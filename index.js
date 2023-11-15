@@ -111,6 +111,18 @@ let users = [
     {
         name: 'AJ',
         favorites: ['creed', 'coach carter', 'fast and furious']
+    },
+    {
+        name: 'Olivia',
+        favorites: ['creed', 'coach carter', 'fast and furious']
+    },
+    {
+        name: 'Dyan',
+        favorites: ['creed', 'coach carter', 'fast and furious']
+    },
+    {
+        name: 'Phil',
+        favorites: ['creed', 'coach carter', 'fast and furious']
     }
 ]
 
@@ -147,7 +159,9 @@ app.get('/movies/directors/:directorName', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
-    res.send('Successful POST request, adding a new user to the database');
+    let newUser = req.body;
+
+    users.push(newUser);
 });
 
 app.put('/users/:username', (req, res) => {
@@ -168,8 +182,13 @@ app.delete('/users/username/favorites', (req, res) => {
     res.send('A movie was successfully deleted from your favorites');
 });
 
-app.delete('/users', (req, res) => {
-    res.send('You were successfully deregistered from our database')
+app.delete('/users/:username', (req, res) => {
+    let username = users.find((user) => {return user.name === req.params.username});
+
+    if(username) {
+        user = users.filter((user) => {return user.name !== req.params.id});
+        res.status(200).send('successfully deleted')
+    };
 })
 
 app.listen(8080, () => {
