@@ -193,13 +193,14 @@ app.put('/users/:username', (req, res) => {
 
 //adds a movie to users list of favorite movies
 app.post('/users/:username/favorites', (req, res) => {
-    let username = users.find((user) => {return user.name === request.params.username});
-    let movie = req.body;
+    let username = users.find((user) => {return user.name === req.params.username});
+    let movie = req.body.movie;
 
     if (movie) {
         username.favorites.push(movie);
+        res.json(username);
     } else {
-        console.log(error);
+        console.log(`error`);
     }
 });
 
