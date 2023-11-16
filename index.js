@@ -109,7 +109,7 @@ let movies = [
 
 let users = [
     {
-        name: 'AJ',
+        name: 'aj',
         favorites: ['creed', 'coach carter', 'fast and furious']
     },
     {
@@ -117,11 +117,11 @@ let users = [
         favorites: ['creed', 'coach carter', 'fast and furious']
     },
     {
-        name: 'Dyan',
+        name: 'dyan',
         favorites: ['creed', 'coach carter', 'fast and furious']
     },
     {
-        name: 'Phil',
+        name: 'phil',
         favorites: ['creed', 'coach carter', 'fast and furious']
     }
 ]
@@ -156,6 +156,10 @@ app.get('/movies/genres/:genreName', (req, res) => {
 
 app.get('/movies/directors/:directorName', (req, res) => {
     res.json(movies.find((movie) => {return movie.director.name === req.params.directorName}));
+});
+
+app.get('/users/:userName', (req, res) => {
+    res.json(users.find((user) => {return user.name === req.params.userName}));
 });
 
 app.post('/users', (req, res) => {
