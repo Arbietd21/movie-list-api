@@ -200,19 +200,20 @@ app.post('/users/:username/favorites', (req, res) => {
         username.favorites.push(movie);
         res.json(username);
     } else {
-        console.log(`error`);
+        res.send("Error");
     }
 });
 
 //deletes a movie from users list of favorite movies
-app.delete('/users/:username/favorites', (req, res) => {
-    let username = users.find((user) => {user.name === request.params.username});
-    let movie = req.body;
+app.delete('/users/:username/favorites/:movie', (req, res) => {
+    let username = users.find((user) => {user.name === req.params.username});
+    let movie = username.favorites.find((movie) => {movie === req.params.username});
 
-    if (username) {
+    if (movie) {
         username.favorites.delete(movie);
+        res.json(username);
     } else {
-        console.log(error);
+        res.send('error');
     }
 });
 
