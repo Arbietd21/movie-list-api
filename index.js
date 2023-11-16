@@ -138,54 +138,84 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
   });
 
+//return a list of movies  
 app.get('/movies', (req, res) => {
     res.json(movies)
 });
 
+//display documentation.html
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/documentation.html')
 });
 
+
+//return a specific movie
 app.get('/movies/:movieTitle', (req, res) => {
     res.json(movies.find((movie) => {return movie.title === req.params.movieTitle}));
 });
 
+
+//find movies by genre
 app.get('/movies/genres/:genreName', (req, res) => {
     res.json(movies.filter((movie) => {return movie.genre === req.params.genreName}));
 });
 
+//find director info by name
 app.get('/movies/directors/:directorName', (req, res) => {
     res.json(movies.find((movie) => {return movie.director.name === req.params.directorName}));
 });
 
+
+//find specific user by username
 app.get('/users/:userName', (req, res) => {
     res.json(users.find((user) => {return user.name === req.params.userName}));
 });
 
+//adds new user
 app.post('/users', (req, res) => {
     let newUser = req.body;
 
-    users.push(newUser);
+    app.post(newUser);
 });
 
+//update users name
 app.put('/users/:username', (req, res) => {
-    let foundUser = users.find((user) => {return user.name === req.params.username});
+    let {oldUsername, newUsername} = req.body;
+    let userToUpdate = users.find((oldUser) => {oldUser.name === oldUsername});
 
-    if (foundUser) {
-      res.send('Username was successfully updated');  
+    if (userToUpdate) {
+        userToUpdate.name = newUsername;
+        console.log(success);
     } else {
-        res.status(404).send('User not found.')
+        console.log('Error user not found');
     }
 });
 
-app.put('/users/username/favorites', (req, res) => {
-    res.send('A movie was successfully added to your favorites');
+//adds a movie to users list of favorite movies
+app.post('/users/:username/favorites', (req, res) => {
+    let username = users.find((user) => {user.name === request.params.username});
+    let movie = req.body;
+
+    if (username) {
+        username.favorites.push(movie);
+    } else {
+        console.log(error);
+    }
 });
 
-app.delete('/users/username/favorites', (req, res) => {
-    res.send('A movie was successfully deleted from your favorites');
+//deletes a movie from users list of favorite movies
+app.delete('/users/:username/favorites', (req, res) => {
+    let username = users.find((user) => {user.name === request.params.username});
+    let movie = req.body;
+
+    if (username) {
+        username.favorites.delete(movie);
+    } else {
+        console.log(error);
+    }
 });
 
+//deletes a user from list of users
 app.delete('/users/:username', (req, res) => {
     let username = users.find((user) => {return user.name === req.params.username});
 
