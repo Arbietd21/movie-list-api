@@ -180,11 +180,11 @@ app.post('/users', (req, res) => {
 
 //update users name
 app.put('/users/:username', (req, res) => {
-    let {oldUsername, newUsername} = req.body;
-    let userToUpdate = users.find((oldUser) => {oldUser.name === oldUsername});
+    let oldUsername = users.find((user) => {return user.name === req.params.username});
+    let newUsername = req.body;
 
-    if (userToUpdate) {
-        userToUpdate.name = newUsername;
+    if (newUsername) {
+        oldUsername.name = newUsername;
         console.log(success);
     } else {
         console.log('Error user not found');
@@ -193,10 +193,10 @@ app.put('/users/:username', (req, res) => {
 
 //adds a movie to users list of favorite movies
 app.post('/users/:username/favorites', (req, res) => {
-    let username = users.find((user) => {user.name === request.params.username});
+    let username = users.find((user) => {return user.name === request.params.username});
     let movie = req.body;
 
-    if (username) {
+    if (movie) {
         username.favorites.push(movie);
     } else {
         console.log(error);
