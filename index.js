@@ -206,26 +206,16 @@ app.post('/users/:username/favorites', (req, res) => {
 
 //deletes a movie from users list of favorite movies
 app.delete('/users/:username/favorites/:movie', (req, res) => {
-    let username = users.find((user) => {user.name === req.params.username});
-    let movie = username.favorites.find((movie) => {movie === req.params.username});
+    let username = users.find((user) => {return user.name === req.params.username});
+    let movie = username.favorites.filter((m) => {return m.favorites != req.params.movie});
 
-    if (movie) {
-        username.favorites.delete(movie);
-        res.json(username);
-    } else {
-        res.send('error');
-    }
+    res.json(users);
 });
 
 //deletes a user from list of users
-app.delete('/users/:username', (req, res) => {
-    let username = users.find((user) => {return user.name === req.params.username});
-
-    if(username) {
-        user = users.filter((user) => {return user.name !== req.params.id});
-        res.status(200).send('successfully deleted')
-    };
-})
+app.delete('/users/deregister/:username', (req, res) => {
+    res.send(users.filter((user) => {return user.name != req.params.username}));
+});
 
 app.listen(8080, () => {
     console.log(`Your app is listening on port 8080`)
