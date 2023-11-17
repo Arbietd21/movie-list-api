@@ -207,14 +207,31 @@ app.post('/users/:username/favorites', (req, res) => {
 //deletes a movie from users list of favorite movies
 app.delete('/users/:username/favorites/:movie', (req, res) => {
     let username = users.find((user) => {return user.name === req.params.username});
-    let movie = username.favorites.filter((m) => {return m.favorites != req.params.movie});
+    
+    if (!username) {
+        return res.status(404).send('User not found');
+    };
 
-    res.json(users);
+    let originalFavoritesCount = user.favorites.length;
+    username.favorites = username.favorites.filter(m => m !== req.params.movie);
+
+    if (user.favorites.length === originalFavoritesCount) {
+        return res.status(404).send('Movie not found in favorites');
+    };
+
+    res.json(username.favorites);
 });
 
 //deletes a user from list of users
 app.delete('/users/deregister/:username', (req, res) => {
-    res.send(users.filter((user) => {return user.name != req.params.username}));
+    let initialLength = users.length;
+    users = users.filter(user => user.name !== req.params.username);
+
+    if (users.length === initialLength) {
+        return res.status(404).send('User not found');
+    }
+
+    res.send('User deleted successfully');
 });
 
 app.listen(8080, () => {
