@@ -24,8 +24,15 @@ app.use((err, req, res, next) => {
   });
 
 //return a list of movies  
-app.get('/movies', (req, res) => {
-    res.json(movies)
+app.get('/movies', async (req, res) => {
+    await Movies.find()
+    .then((movies) => {
+        res.status(201).json(movies);
+    })
+    .catch((error) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 //display documentation.html
