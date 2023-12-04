@@ -11,128 +11,6 @@ let morgan = require('morgan');
 let bodyParser = require('body-parser');
 let methodOverride = require('method-override');
 
-let movies = [
-    {
-        title: 'Creed',
-        actor: 'Michael B. Jordan',
-        genre: 'action',
-        director: {
-            name: 'Ryan Coogler',
-            bio: 'American Filmmaker known for moives like Black Panther and Fruitvale Station',
-            birthYear: '1986',
-        }
-    },
-    {
-        title: 'Gran Turismo',
-        actor: 'Archih Madekwe',
-        genre: 'action',
-        director: {
-            name: '',
-            bio: '',
-            birthYear: '',
-        }
-    },
-    {
-        title: 'Fast and Furious',
-        actor: 'Paul Walker',
-        genre: 'action',
-        director: {
-            name: '',
-            bio: '',
-            birthYear: '',
-        }
-    },
-    {
-        title: 'Iron Man',
-        actor: 'Robert Downy Jr',
-        genre: 'action',
-        director: {
-            name: '',
-            bio: '',
-            birthYear: '',
-        }
-    },
-    {
-        title: 'Coach Carter',
-        actor: 'Samuel Jackson',
-        genre: 'drama',
-        director: {
-            name: '',
-            bio: '',
-            birthYear: '',
-        }
-    },
-    {
-        title: 'Thor Ragnarok',
-        actor: 'Chris Hemsworth',
-        genre: 'action',
-        director: {
-            name: '',
-            bio: '',
-            birthYear: '',
-        }
-    },
-    {
-        title: 'Rush Hour',
-        actor: 'Jackie Chan',
-        genre: 'comedy',
-        director: {
-            name: '',
-            bio: '',
-            birthYear: '',
-        }
-    },
-    {
-        title: 'Training Day',
-        actor: 'Denzel Washington',
-        genre: 'drama',
-        director: {
-            name: '',
-            bio: '',
-            birthYear: '',
-        }
-    },
-    {
-        title: 'Hitch',
-        actor: 'Will Smith',
-        genre: 'comedy',
-        director: {
-            name: '',
-            bio: '',
-            birthYear: '',
-        }
-    },
-    {
-        title: 'Hunger Games',
-        actor: 'Jennifer Lawrence',
-        genre: 'action',
-        director: {
-            name: '',
-            bio: '',
-            birthYear: '',
-        }
-    },
-];
-
-let users = [
-    {
-        name: 'aj',
-        favorites: ['creed', 'coach carter', 'fast and furious']
-    },
-    {
-        name: 'Olivia',
-        favorites: ['creed', 'coach carter', 'fast and furious']
-    },
-    {
-        name: 'dyan',
-        favorites: ['creed', 'coach carter', 'fast and furious']
-    },
-    {
-        name: 'phil',
-        favorites: ['creed', 'coach carter', 'fast and furious']
-    }
-]
-
 app.use(morgan('common'));
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
@@ -179,10 +57,29 @@ app.get('/users/:userName', (req, res) => {
 });
 
 //adds new user
-app.post('/users', (req, res) => {
-    let newUser = req.body;
-
-    app.post(newUser);
+app.post('/users', async (req, res) => {
+    await Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+        if (user) {
+            return res.status(400).send(req.body.Username + 'already exists');
+        } else {
+            Users.create({
+                Username: req.body.Username,
+                Password: req.body.Password,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
+            })
+            .then((user) => {res.status(201).json(user)})
+            .catch((error) => {
+                console.error(error);
+                res.status(500).send('Error: ' + error);
+            })
+        }
+    })
+    .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+    });
 });
 
 //update users name
