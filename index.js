@@ -57,6 +57,18 @@ app.get('/movies/directors/:directorName', (req, res) => {
     res.json(movies.find((movie) => {return movie.director.name === req.params.directorName}));
 });
 
+//return a list of all users
+app.get('/users', async (req, res) => {
+    await Users.find()
+    then((users) => {
+        res.status(201).json(users);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
+  });
+
 
 //find specific user by username
 app.get('/users/:userName', (req, res) => {
