@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
-const Users =Model.User;
+const Users = Model.User;
 mongoose.connect('mongodb://localhost:27017/careerFoundryDB', {useNewUrlParser: true, useUnifiedTopology: true });
 
 let express = require('express');
