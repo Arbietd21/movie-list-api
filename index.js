@@ -1,3 +1,9 @@
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users =Model.User;
+
 let express = require('express');
 let app = express();
 let morgan = require('morgan');
