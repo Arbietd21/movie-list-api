@@ -150,9 +150,8 @@ app.put('/users/:username', async (req, res) => {
 });
 
 //adds a movie to users list of favorite movies
-app.post('/users/:username/movies/:movieID', async (req, res) => {
-    await Users.findOneAndUpdate({ username: req.params.username }, {
-        $push: { Favorites: req.params.movieID }
+app.post('/users/:username/movies/:MovieID', async (req, res) => {
+    await Users.findOneAndUpdate({ Username: req.params.username }, { $push: { Favorites: req.params.MovieID }
     },
     {new: true})
     .then((updatedUser) => {
@@ -165,21 +164,17 @@ app.post('/users/:username/movies/:movieID', async (req, res) => {
 });
 
 //deletes a movie from users list of favorite movies
-app.delete('/users/:username/favorites/:movie', (req, res) => {
-    let username = users.find((user) => {return user.name === req.params.username});
-    
-    if (!username) {
-        return res.status(404).send('User not found');
-    };
-
-    let originalFavoritesCount = user.favorites.length;
-    username.favorites = username.favorites.filter(m => m !== req.params.movie);
-
-    if (user.favorites.length === originalFavoritesCount) {
-        return res.status(404).send('Movie not found in favorites');
-    };
-
-    res.json(username.favorites);
+app.delete('/users/:username/favorites/:MovieID', async (req, res) => {
+    await Users.findByIdAndDelete({ Username: req.params.username }, { $delete: { Favorites: req.params.MovieID }
+    },
+    {new: true})
+    .then((updatedUser) => {
+        res.json(updatedUser);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    })
 });
 
 //deletes a user from list of users
