@@ -115,7 +115,7 @@ app.post('/users', async (req, res) => {
     });
 });
 
-//update users name
+//update users info
 app.put('/users/:username', async (req, res) => {
     await Users.findOneAndUpdate({ Username: req.params.username }, {$set:
     {
@@ -132,20 +132,22 @@ app.put('/users/:username', async (req, res) => {
     .catch((err) => {
         console.error(err);
         res.status(500).send('Error: ' + err);
-      })
+    })
 });
 
 //adds a movie to users list of favorite movies
-app.post('/users/:username/favorites', (req, res) => {
-    let username = users.find((user) => {return user.name === req.params.username});
-    let movie = req.body.movie;
-
-    if (movie) {
-        username.favorites.push(movie);
-        res.json(username);
-    } else {
-        res.send("Error");
-    }
+app.post('/users/:username/movies/:movieID', async (req, res) => {
+    await Users.findOneAndUpdate({ username: req.params.username }, {
+        $push: { Favorites: req.params.movieID }
+    },
+    {new: true})
+    .then((updatedUser) => {
+        res.json(updatedUser);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    })
 });
 
 //deletes a movie from users list of favorite movies
