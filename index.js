@@ -48,20 +48,34 @@ app.get('/movies/:movieTitle', async (req, res) => {
     res.status(201).json(movie);
    })
    .catch((error) => {
-    console.error(err);
-    res.status(500).send('Error: ' + err);
+        console.error(err);
+        res.status(500).send('Error: ' + err);
    })
 });
 
 
 //find movies by genre
-app.get('/movies/genres/:genreName', (req, res) => {
-    res.json(movies.filter((movie) => {return movie.genre === req.params.genreName}));
+app.get('/movies/genres/:genreName', async (req, res) => {
+    await Movies.find({ "Genre.Name": req.params.genreName})
+    .then ((movies) => {
+        res.status(201).json(movies);
+    })
+    .catch((error) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    })
 });
 
 //find director info by name
-app.get('/movies/directors/:directorName', (req, res) => {
-    res.json(movies.find((movie) => {return movie.director.name === req.params.directorName}));
+app.get('/movies/directors/:directorName', async (req, res) => {
+    await Movies.find({ "Director.Name": req.params.directorName})
+    .then ((director) => {
+        res.status(200).json(director);
+    })
+    .catch((error) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    })
 });
 
 //return a list of all users
@@ -169,15 +183,19 @@ app.delete('/users/:username/favorites/:movie', (req, res) => {
 });
 
 //deletes a user from list of users
-app.delete('/users/deregister/:username', (req, res) => {
-    let initialLength = users.length;
-    users = users.filter(user => user.name !== req.params.username);
-
-    if (users.length === initialLength) {
-        return res.status(404).send('User not found');
-    }
-
-    res.send('User deleted successfully');
+app.delete('/users/:username', async (req, res) => {
+    await Users.findOneAndDelete({ Username: req.params.username})
+    .then((user) => {
+        if (!user){
+            res.status(400).send(req.params.username + ' was not found.');
+        } else {
+            res.status(200).send(req.params.username + ' was deleted.');
+        }
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 app.listen(8080, () => {
