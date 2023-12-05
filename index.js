@@ -42,8 +42,15 @@ app.get('/', (req, res) => {
 
 
 //return a specific movie
-app.get('/movies/:movieTitle', (req, res) => {
-    res.json(movies.find((movie) => {return movie.title === req.params.movieTitle}));
+app.get('/movies/:movieTitle', async (req, res) => {
+   await Movies.findOne({ Title: req.params.movieTitle })
+   .then((movie) => {
+    res.status(201).json(movie);
+   })
+   .catch((error) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+   })
 });
 
 
@@ -60,7 +67,7 @@ app.get('/movies/directors/:directorName', (req, res) => {
 //return a list of all users
 app.get('/users', async (req, res) => {
     await Users.find()
-    then((users) => {
+    .then((users) => {
         res.status(201).json(users);
     })
     .catch((err) => {
@@ -71,8 +78,15 @@ app.get('/users', async (req, res) => {
 
 
 //find specific user by username
-app.get('/users/:userName', (req, res) => {
-    res.json(users.find((user) => {return user.name === req.params.userName}));
+app.get('/users/:userName', async (req, res) => {
+    await Users.findOne({ Username: req.params.userName})
+    .then((user) => {
+        res.status(201).json(user);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    });
 });
 
 //adds new user
@@ -102,16 +116,23 @@ app.post('/users', async (req, res) => {
 });
 
 //update users name
-app.put('/users/:username', (req, res) => {
-    let oldUsername = users.find((user) => {return user.name === req.params.username});
-    let newUsername = req.body;
-
-    if (newUsername) {
-        oldUsername.name = newUsername;
-        console.log(success);
-    } else {
-        console.log('Error user not found');
+app.put('/users/:username', async (req, res) => {
+    await Users.findOneAndUpdate({ Username: req.params.username }, {$set:
+    {
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birthday: req.body.Birthday
     }
+    },
+    { new: true})
+    .then((updatedUser) => {
+        res.json(updatedUser);
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      })
 });
 
 //adds a movie to users list of favorite movies
