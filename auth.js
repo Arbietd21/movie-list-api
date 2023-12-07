@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken'),
 require('./passport');
 //your local passport file. does this need to have '.js' after it?
 
-let generateJWTToken = (user => {
+let generateJWTToken = (user) => {
     return jwt.sign(user, jwtSecret, {
         subject: user.Username, //this is the username you're encoding in the JWT
         expiresIn: '7d', //This specifies that the token will expire in 7 days
