@@ -21,7 +21,12 @@ app.use(methodOverride());
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
-  });
+});
+
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+require('./passport')
 
 //return a list of movies  
 app.get('/movies', async (req, res) => {
