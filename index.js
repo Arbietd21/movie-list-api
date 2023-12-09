@@ -5,6 +5,7 @@ const Movies = Models.Movie;
 const Users = Models.User;
 mongoose.connect('mongodb://localhost:27017/careerFoundryDB', {useNewUrlParser: true, useUnifiedTopology: true });
 
+
 let express = require('express');
 let app = express();
 let morgan = require('morgan');
@@ -98,7 +99,7 @@ app.get('/movies/directors/:directorName', passport.authenticate('jwt', {session
 });
 
 //return a list of all users
-app.get('/users', passport.authenticate('jwt', {session: false}), async (req, res) => {
+app.get('/users', /*passport.authenticate('jwt', {session: false}),*/ async (req, res) => {
     await Users.find()
     .then((users) => {
         res.status(201).json(users);
