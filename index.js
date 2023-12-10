@@ -132,6 +132,8 @@ app.post('/users', [
     check('Password', 'Password is required.').isLength({min:8}),
     check('Email', 'Email does not appear to be valid.').isEmail()
 ], async (req, res) => {
+    console.log('Request Body:', req.body);
+    
     let errors = validationResult(req);
 
     if(!errors.isEmpty()) {
@@ -149,7 +151,10 @@ app.post('/users', [
                 Email: req.body.Email,
                 Birthday: req.body.Birthday
             })
-            .then((user) => {res.status(201).json(user)})
+            .then((user) => {
+                console.log('Hashed Password:',  hashedPassword);
+                res.status(201).json(user);
+            })
             .catch((error) => {
                 console.error(error);
                 res.status(500).send('Error: ' + error);
