@@ -43,6 +43,10 @@ let auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport')
 
+const {check, validationResult } = require('express-validator');
+
+check('Username', 'Username contains non-alphanumeric characers - not allowed.').isAlphanumeric();
+
 //return a list of movies  
 app.get('/movies', passport.authenticate('jwt', {session: false}), async (req, res) => {
     await Movies.find()
