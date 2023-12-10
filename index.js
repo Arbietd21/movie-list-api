@@ -163,7 +163,18 @@ app.post('/users', [
 });
 
 //update users info
-app.put('/users/:username', passport.authenticate('jwt', {session: false}), async (req, res) => {
+app.put('/users/:username', [
+    check('Username', 'Username is required').isLength({min:5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required.').isLength({min:8}),
+    check('Email', 'Email does not appear to be valid.').isEmail()
+], passport.authenticate('jwt', {session: false}), async (req, res) => {
+
+    let errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+        return res.status(422).json({errors: errors.array() });
+    }
 
     if(req.user.Username !== req.params.username){
         return res.status(400).send('Permission Denied');
