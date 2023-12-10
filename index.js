@@ -101,7 +101,7 @@ app.get('/movies/directors/:directorName', passport.authenticate('jwt', {session
 });
 
 //return a list of all users
-app.get('/users', /*passport.authenticate('jwt', {session: false}),*/ async (req, res) => {
+app.get('/users', passport.authenticate('jwt', {session: false}), async (req, res) => {
     await Users.find()
     .then((users) => {
         res.status(201).json(users);
@@ -147,7 +147,7 @@ app.post('/users', [
         } else {
             Users.create({
                 Username: req.body.Username,
-                Password: req.body.Password,
+                Password: hashedPassword,
                 Email: req.body.Email,
                 Birthday: req.body.Birthday
             })
