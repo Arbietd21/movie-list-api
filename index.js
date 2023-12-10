@@ -133,7 +133,7 @@ app.post('/users', [
     check('Email', 'Email does not appear to be valid.').isEmail()
 ], async (req, res) => {
     console.log('Request Body:', req.body);
-    
+
     let errors = validationResult(req);
 
     if(!errors.isEmpty()) {
