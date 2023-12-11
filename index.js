@@ -60,7 +60,7 @@ app.get('/movies', passport.authenticate('jwt', {session: false}), async (req, r
 
 //display documentation.html
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + './public/documentation.html')
+    res.send('Welcome to my API!')
 });
 
 
