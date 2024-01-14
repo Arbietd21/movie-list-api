@@ -96,7 +96,7 @@ app.get('/movies/directors/:directorName', passport.authenticate('jwt', { sessio
             res.status(200).json(director);
         })
         .catch((error) => {
-            console.error(err);
+            console.error(error);
             res.status(500).send('Error: ' + err);
         })
 });
