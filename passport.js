@@ -10,8 +10,8 @@ let Users = Models.User,
 passport.use(
     new localStrategy(
         {
-            usernameField: 'Username',
-            passwordField: 'Password',
+            usernameField: 'username',
+            passwordField: 'password',
         },
         async (username, password, callback) => {
             console.log(username + ' ' + password);
