@@ -128,10 +128,10 @@ app.get('/users/:userName', passport.authenticate('jwt', { session: false }), as
 
 //adds new user
 app.post('/users', [
-    check('Username', 'Username is required').isLength({ min: 5 }),
-    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('Password', 'Password is required.').isLength({ min: 8 }),
-    check('Email', 'Email does not appear to be valid.').isEmail()
+    check('username', 'Username is required').isLength({ min: 5 }),
+    check('username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('password', 'Password is required.').isLength({ min: 8 }),
+    check('email', 'Email does not appear to be valid.').isEmail()
 ], async (req, res) => {
     console.log('Request Body:', req.body);
 
@@ -141,19 +141,19 @@ app.post('/users', [
         return res.status(422).json({ errors: errors.array() });
     }
     let hashedPassword = Users.hashPassword(req.body.Password);
-    await Users.findOne({ Username: req.body.Username }) //searches the db to see if the username already exists
+    await Users.findOne({ username: req.body.username }) //searches the db to see if the username already exists
         .then((user) => {
             if (user) {
-                return res.status(400).send(req.body.Username + ' already exists');
+                return res.status(400).send(req.body.username + ' already exists');
             } else {
                 Users.create({
-                    Username: req.body.Username,
-                    Password: hashedPassword,
-                    Email: req.body.Email,
-                    Birthday: req.body.Birthday
+                    username: req.body.username,
+                    password: hashedpassword,
+                    email: req.body.email,
+                    birthday: req.body.birthday
                 })
                     .then((user) => {
-                        console.log('Hashed Password:', hashedPassword);
+                        console.log('Hashed password:', hashedPassword);
                         res.status(201).json(user);
                     })
                     .catch((error) => {
