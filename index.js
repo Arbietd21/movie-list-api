@@ -116,7 +116,7 @@ app.get('/users', passport.authenticate('jwt', { session: false }), async (req, 
 
 //find specific user by username
 app.get('/users/:userName', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    await Users.findOne({ Username: req.params.userName })
+    await Users.findOne({ username: req.params.userName })
         .then((user) => {
             res.status(201).json(user);
         })
@@ -140,7 +140,7 @@ app.post('/users', [
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
     }
-    let hashedPassword = Users.hashPassword(req.body.Password);
+    let hashedPassword = Users.hashPassword(req.body.password);
     await Users.findOne({ username: req.body.username }) //searches the db to see if the username already exists
         .then((user) => {
             if (user) {
@@ -182,7 +182,7 @@ app.put('/users/:username', [
         return res.status(422).json({ errors: errors.array() });
     }
 
-    if (req.user.Username !== req.params.username) {
+    if (req.user.username !== req.params.username) {
         return res.status(400).send('Permission Denied');
     }
 
@@ -228,11 +228,11 @@ app.post('/users/:username/movies/:MovieID', passport.authenticate('jwt', { sess
 //deletes a movie from users list of favorite movies
 app.delete('/users/:username/favorites/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
 
-    if (req.user.Username !== req.params.username) {
+    if (req.user.username !== req.params.username) {
         return res.status(400).send('Permission Denied');
     }
 
-    await Users.findByIdAndDelete({ Username: req.params.username }, {
+    await Users.findByIdAndDelete({ username: req.params.username }, {
         $delete: { favorites: req.params.MovieID }
     },
         { new: true })
