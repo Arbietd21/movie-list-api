@@ -170,10 +170,10 @@ app.post('/users', [
 
 //update users info
 app.put('/users/:username', [
-    check('Username', 'Username is required').isLength({ min: 5 }),
-    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('Password', 'Password is required.').isLength({ min: 8 }),
-    check('Email', 'Email does not appear to be valid.').isEmail()
+    check('username', 'username is required').isLength({ min: 5 }),
+    check('username', 'username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('password', 'password is required.').isLength({ min: 8 }),
+    check('email', 'email does not appear to be valid.').isEmail()
 ], passport.authenticate('jwt', { session: false }), async (req, res) => {
 
     let errors = validationResult(req);
@@ -186,13 +186,13 @@ app.put('/users/:username', [
         return res.status(400).send('Permission Denied');
     }
 
-    await Users.findOneAndUpdate({ Username: req.params.username }, {
+    await Users.findOneAndUpdate({ username: req.params.username }, {
         $set:
         {
-            Username: req.body.Username,
-            Password: req.body.Password,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email,
+            birthday: req.body.birthday
         }
     },
         { new: true })
@@ -208,11 +208,11 @@ app.put('/users/:username', [
 //adds a movie to users list of favorite movies
 app.post('/users/:username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
 
-    if (req.user.Username !== req.params.username) {
+    if (req.user.username !== req.params.username) {
         return res.status(400).send('Permission Denied');
     }
 
-    await Users.findOneAndUpdate({ Username: req.params.username }, {
+    await Users.findOneAndUpdate({ username: req.params.username }, {
         $push: { Favorites: req.params.MovieID }
     },
         { new: true })
@@ -248,11 +248,11 @@ app.delete('/users/:username/favorites/:MovieID', passport.authenticate('jwt', {
 //deletes a user from list of users
 app.delete('/users/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
 
-    if (req.user.Username !== req.params.username) {
+    if (req.user.username !== req.params.username) {
         return res.status(400).send('Permission Denied');
     }
 
-    await Users.findOneAndDelete({ Username: req.params.username })
+    await Users.findOneAndDelete({ username: req.params.username })
         .then((user) => {
             if (!user) {
                 res.status(400).send(req.params.username + ' was not found.');
