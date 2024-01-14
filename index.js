@@ -163,8 +163,8 @@ app.post('/users', [
             }
         })
         .catch((error) => {
-            console.error(error);
-            res.status(500).send('Error: ' + error);
+            console.error(err);
+            res.status(500).send('Error: ' + err);
         });
 });
 
