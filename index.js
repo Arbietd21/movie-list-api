@@ -170,60 +170,40 @@ app.post('/users', [
 
 //update users info
 app.put('/users/:username', [
-    check('username', 'Username is required').isLength({ min: 5 }),
-    check('username', 'Username contains non-alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('email', 'Email does not appear to be valid.').isEmail(),
-    check('password', 'Password is required.').optional().isLength({ min: 8 }) // Making password optional
+    check('username', 'username is required').isLength({ min: 5 }),
+    check('username', 'username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('password', 'password is required.').isLength({ min: 8 }),
+    check('email', 'email does not appear to be valid.').isEmail()
 ], passport.authenticate('jwt', { session: false }), async (req, res) => {
 
-    const errors = validationResult(req);
+    let errors = validationResult(req);
 
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
     }
 
     if (req.user.username !== req.params.username) {
-        return res.status(403).send('Permission Denied'); // 403 for forbidden
+        return res.status(400).send('Permission Denied');
     }
 
-    // Create an object to hold the fields to be updated
-    const updateFields = {};
-
-    if (req.body.username) {
-        updateFields.username = req.body.username;
-    }
-
-    if (req.body.email) {
-        updateFields.email = req.body.email;
-    }
-
-    if (req.body.birthday) {
-        updateFields.birthday = req.body.birthday;
-    }
-
-    // Check if a new password is provided and hash it
-    if (req.body.password) {
-        updateFields.password = Users.hashPassword(req.body.password);
-    }
-
-    try {
-        const updatedUser = await Users.findOneAndUpdate(
-            { username: req.params.username },
-            updateFields,
-            { new: true }
-        );
-
-        if (!updatedUser) {
-            return res.status(404).send('User not found');
+    await Users.findOneAndUpdate({ username: req.params.username }, {
+        $set:
+        {
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email,
+            birthday: req.body.birthday
         }
-
-        return res.json(updatedUser);
-    } catch (err) {
-        console.error(err);
-        return res.status(500).send('Error: ' + err);
-    }
+    },
+        { new: true })
+        .then((updatedUser) => {
+            res.json(updatedUser);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        })
 });
-
 
 //adds a movie to users list of favorite movies
 app.post('/users/:username/movies/:MovieID', passport.authenticate('jwt', { session: false }), async (req, res) => {
