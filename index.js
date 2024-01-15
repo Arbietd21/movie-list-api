@@ -172,7 +172,7 @@ app.post('/users', [
 app.put('/users/:username', [
     check('username', 'username is required').isLength({ min: 5 }),
     check('username', 'username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('password', 'password is required.').isLength({ min: 8 }),
+    // check('password', 'password is required.').isLength({ min: 8 }),
     check('email', 'email does not appear to be valid.').isEmail()
 ], passport.authenticate('jwt', { session: false }), async (req, res) => {
 
@@ -190,7 +190,7 @@ app.put('/users/:username', [
         $set:
         {
             username: req.body.username,
-            password: req.body.password,
+            // password: req.body.password,
             email: req.body.email,
             birthday: req.body.birthday
         }
