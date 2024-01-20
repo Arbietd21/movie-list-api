@@ -173,7 +173,7 @@ app.post('/users', [
 app.put('/users/:username', [
     check('username', 'username is required').isLength({ min: 5 }),
     check('username', 'username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('password').optional({ nullable: true }),//.isLength({ min: 5 }),
+    check('password', 'password is required').isLength({ min: 5 }),
     check('email').optional({ nullable: true }),//.isEmail(),
     check('birthday').optional({ nullable: true })
 ], passport.authenticate('jwt', { session: false }), async (req, res) => {
