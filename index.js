@@ -171,10 +171,10 @@ app.post('/users', [
 
 //update users info
 app.put('/users/:username', [
-    check('username', 'username is required').isLength({ min: 5 })/*,
+    check('username', 'username is required').isLength({ min: 5 }),
     check('username', 'username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('password', 'password is required.').isLength({ min: 8 }),
-    check('email', 'email does not appear to be valid.').isEmail()*/
+    check('password').optional({ nullable: true }).isLength({ min: 5 }),
+    check('email').optional({ nullable: true }).isEmail()
 ], passport.authenticate('jwt', { session: false }), async (req, res) => {
 
     let errors = validationResult(req);
