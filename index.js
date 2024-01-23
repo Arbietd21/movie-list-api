@@ -234,7 +234,7 @@ app.delete('/users/:username/favorites/:MovieID', passport.authenticate('jwt', {
         return res.status(400).send('Permission Denied');
     }
 
-    await Users.findOneAndDelete({ username: req.params.username }, {
+    await Users.findOneAndUpdate({ username: req.params.username }, {
         $delete: { favorites: req.params.MovieID }
     },
         { new: true })
